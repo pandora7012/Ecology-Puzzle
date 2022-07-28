@@ -45,8 +45,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sprite: {fileID: 3662728680647226795}
-  color1: {fileID: 21300000, guid: ffaf005941adf14458aec37e3c7c1754, type: 3}
-  color2: {fileID: 21300000, guid: 5454278a8517f5e4286a93bb1ccc3eb3, type: 3}
+  color1: {r: 0.36078432, g: 0.7019608, b: 0.098039225, a: 1}
+  color2: {r: 0.49411768, g: 0.8078432, b: 0.078431375, a: 1}
 --- !u!1 &7883446635596715810
 GameObject:
   m_ObjectHideFlags: 0
@@ -117,7 +117,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: ffaf005941adf14458aec37e3c7c1754, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 51edf68c936dde243800a47224214090, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
