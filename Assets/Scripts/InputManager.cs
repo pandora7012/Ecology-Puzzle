@@ -8,7 +8,7 @@ public class InputManager : MonoBehaviour
 {
     private void Update()
     {
-        if (Input.touchCount != 1 || Input.touches[0].phase != TouchPhase.Began) return;
+        if (Input.touchCount != 1 || Input.touches[0].phase != TouchPhase.Began || EventSystem.current.IsPointerOverGameObject() ) return;
         var state = LevelManager.Instance.gameState;
 
         switch (state)
@@ -16,8 +16,7 @@ public class InputManager : MonoBehaviour
             case LevelManager.GameState.Play:
                 ConfirmPlatform();
                 break;
-            case LevelManager.GameState.Pause:
-                // do st
+            default:
                 break;
         }
     }

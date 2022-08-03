@@ -6,8 +6,6 @@ public class Observer : Singleton<Observer>
 {
     
     public delegate void GameEvent();
-    public static GameEvent ResetTile;
-    public static GameEvent ResetMovingPlatform;
-    public static GameEvent ResetObjective;
+    public static GameEvent ResetObjectBase;
 
 }
