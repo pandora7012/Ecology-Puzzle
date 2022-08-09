@@ -35,14 +35,27 @@ public class ObjectBase : MonoBehaviour
     {
     }
 
-    public virtual void MoveObject(Vector2 targetPosition, float time)
+    public virtual void MoveObject(Vector3 targetPosition, float time, bool needPath)
     {
-        transform.DOLocalMove(targetPosition, time);
+        if (!needPath)
+        {
+            transform.DOLocalMove(targetPosition, time);
+            return;
+        }
+
+        var midPoint = (transform.position + targetPosition) / 2;
+        if (transform.position.y > targetPosition.y)
+            midPoint.x += 1;
+        else
+            midPoint.x -= 1;
+
+        var waypoint = new[] { midPoint, targetPosition };
+        transform.DOLocalPath(waypoint, time + time*0.25f, PathType.CatmullRom, PathMode.Sidescroller2D, 3, Color.cyan);
     }
 
     public virtual void ChangePositionInGrid(Vector2 cp)
     {
-        Debug.Log(PositionInGrid + "->" + cp);
+      //  Debug.Log(PositionInGrid + "->" + cp);
         PositionInGrid = cp;
         LevelManager.Instance.AddObjectToMap(this, (int)cp.x, (int)cp.y);
     }

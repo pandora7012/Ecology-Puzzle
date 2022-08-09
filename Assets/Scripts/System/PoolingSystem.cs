@@ -20,6 +20,8 @@ public class PoolingSystem : Singleton<PoolingSystem>
     public List<Objective> objectivesPool = new List<Objective>();
     public List<Barrier> barrierPool = new List<Barrier>();
 
+    public DataContainer SpriteContainer;
+    
     public override void InitAwake()
     {
         base.InitAwake();

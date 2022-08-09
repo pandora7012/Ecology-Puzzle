@@ -3,18 +3,21 @@ using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class Tile : ObjectBase
 {
     [SerializeField] private SpriteRenderer sprite;
-    [SerializeField] private Color color1;
-    [SerializeField] private Color color2;
+    [SerializeField] private SpriteRenderer movingObjSprite;
     [SerializeField] private Color dangerColor;
-    [SerializeField] private Color dangerColor2;
 
-    [SerializeField] private Color idleColor;
-    [SerializeField] private Color selectColor;
 
+    protected override void DisableObject()
+    {
+        base.DisableObject();
+        sprite.material.color = Color.white;
+        sprite.material.color = Color.white;
+    }
 
     public void Init(Vector2 position, Transform parent)
     {
@@ -25,27 +28,31 @@ public class Tile : ObjectBase
 
     public void SetIsBackgroundColor(int color)
     {
-        sprite.material.color = color == 1 ? color1 : color2; 
+        sprite.gameObject.SetActive(true);
+        var len = PoolingSystem.Instance.SpriteContainer.normalSprite1.Length;
+        sprite.sprite = color == 1
+            ? PoolingSystem.Instance.SpriteContainer.movingSprite1
+            : PoolingSystem.Instance.SpriteContainer.movingSprite2;
+        movingObjSprite.gameObject.SetActive(false);
+        sprite.sortingOrder = (int)-transform.position.y;
     }
 
-    public void SetIsMovePlatformColor(Color color)
+    public void SetIsMovePlatformColor()
     {
-        sprite.material.color = color; 
-        
+        sprite.gameObject.SetActive(false);
+        movingObjSprite.gameObject.SetActive(true);
     }
+    
 
-    public void SetToDangerArea(int r)
+    public void SetToDangerArea()
     {
-        if (r%2 == 0)
-            sprite.material.color = dangerColor;
-        else 
-            sprite.material.color = dangerColor2;
-
+        sprite.gameObject.SetActive(true);
+        movingObjSprite.gameObject.SetActive(false);
+        sprite.sprite = PoolingSystem.Instance.SpriteContainer.DangerSprite; 
     }
 
     public void OnChooseOnMovingPlatform()
     {
-        sprite.material.DOColor( selectColor , LevelManager.Instance.animRuntime).From(idleColor).SetEase(Ease.OutCirc);
+        //sprite.material.DOColor( selectColor , LevelManager.Instance.animRuntime + 0.5f).From(idleColor).SetEase(Ease.OutCirc);
     }
-
 }

@@ -3,8 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Sirenix.OdinInspector;
-using Sirenix.Utilities.Editor;
-using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -57,6 +55,7 @@ public class LevelGenerator : MonoBehaviour
     [Button("Test GetLevel")]
     public void GenerateLevel( string[] info)
     {
+        SoundManager.Instance.MusicFadeOut(0.5f , 0.1f);
         //Generate map
         var tmp = new List<string>();
         tmp = info[0].Split().ToList();
@@ -66,7 +65,7 @@ public class LevelGenerator : MonoBehaviour
         _tileMatrix = new Tile[_rowNum, _colNum];
         LevelManager.Instance.ObjBase = new ObjectBase[_rowNum, _colNum];
         GenerateMap();
-        LevelManager.Instance.cameraController.SetSizeAndPos(_rowNum+1, _rowNum%2 == 0 ? new Vector3(-0.5f,0, -10) : new Vector3(0,0f, -10));
+        LevelManager.Instance.cameraController.SetSizeAndPos(_rowNum+ 1.3f, _rowNum%2 == 0 ? new Vector3(-0.5f,0.1f, -10) : new Vector3(0,0.1f, -10));
 
         // get Objective Info
         tmp = info[1].Split().ToList();
@@ -105,9 +104,10 @@ public class LevelGenerator : MonoBehaviour
                 var obj = PoolingSystem.Instance.GetTile();
                 obj.transform.parent = planeContainer.transform;
                 _tileMatrix[i, j] = obj;
-                obj.SetIsBackgroundColor((i + j) % 2 == 0 ? 1 : 2);
+                
                 obj.gameObject.SetActive(true);
                 obj.transform.localPosition = new Vector3(i - _rowNum / 2, j - _colNum / 2, 0);
+                obj.SetIsBackgroundColor((i + j) % 2 == 0 ? 1 : 2);
             }
         }
     }
@@ -153,7 +153,7 @@ public class LevelGenerator : MonoBehaviour
             var i2 = int.Parse(i[1]);
             var pos = new Vector2(i2, i1);
             LevelManager.Instance.dangerTilePos.Add(pos);
-            _tileMatrix[i2, i1].SetToDangerArea(i2+i1);
+            _tileMatrix[i2, i1].SetToDangerArea();
         }
     }
     

@@ -33,14 +33,15 @@ public class LevelManager : Singleton<LevelManager>
         ObjBase[x, y] = obj;
         var p = obj.TryGetComponent(out Objective op);
         if (p)
-        {
             objectives.Add(op);
-        }
     }
 
 
     public void MoveObject(Vector2 mainPos, int size, int angle, bool isRightDirection)
     {
+        
+        
+        
         var x = (int)mainPos.x;
         var y = (int)mainPos.y;
         int haft = size / 2;
@@ -48,7 +49,7 @@ public class LevelManager : Singleton<LevelManager>
         var tmp2 = new List<Vector2>();
         int offsetX = x - haft;
         int offsetY = y - haft; // 시작 위치
-
+        
         for (int i = x - haft; i <= x + haft; i++)
         {
             for (int j = y - haft; j <= y + haft; j++)
@@ -57,36 +58,43 @@ public class LevelManager : Singleton<LevelManager>
                     continue;
                 int ip = i - offsetX;
                 int jp = j - offsetY;
-                if (isRightDirection && angle == 90)
+                switch (isRightDirection)
                 {
-                    int tX = jp + offsetX;
-                    int tY = size - ip + offsetY - 1;
-                    tmp.Add(ObjBase[i, j]);
-                    tmp2.Add(new Vector2(tX, tY));
-                    ObjBase[i, j].MoveObject(generator.GetTile(tX, tY).transform.position, animRuntime);
-                    ObjBase[i, j] = null;
-                }
-
-                else if (!isRightDirection && angle == 90)
-                {
-                    int tX = size - jp + offsetX - 1;
-                    int tY = ip + offsetY;
-                    tmp.Add(ObjBase[i, j]);
-                    tmp2.Add(new Vector2(tX, tY));
-                    ObjBase[i, j].MoveObject(generator.GetTile(tX, tY).transform.position, animRuntime);
-                    ObjBase[i, j] = null;
-                }
-                else
-                {
-                    int tX = size - ip + offsetX - 1;
-                    int tY = size - jp + offsetY - 1;
-                    tmp.Add(ObjBase[i, j]);
-                    tmp2.Add(new Vector2(tX, tY));
-                    ObjBase[i, j].MoveObject(generator.GetTile(tX, tY).transform.position, animRuntime);
-                    ObjBase[i, j] = null;
+                    case true when angle == 90:
+                    {
+                        int tX = jp + offsetX;
+                        int tY = size - ip + offsetY - 1;
+                        tmp.Add(ObjBase[i, j]);
+                        tmp2.Add(new Vector2(tX, tY));
+                        ObjBase[i, j].MoveObject(generator.GetTile(tX, tY).transform.position, animRuntime, false);
+                        ObjBase[i, j] = null;
+                        break;
+                    }
+                    case false when angle == 90:
+                    {
+                        int tX = size - jp + offsetX - 1;
+                        int tY = ip + offsetY;
+                        tmp.Add(ObjBase[i, j]);
+                        tmp2.Add(new Vector2(tX, tY));
+                        ObjBase[i, j].MoveObject(generator.GetTile(tX, tY).transform.position, animRuntime, false);
+                        ObjBase[i, j] = null;
+                        break;
+                    }
+                    default:
+                    {
+                        int tX = size - ip + offsetX - 1;
+                        int tY = size - jp + offsetY - 1;
+                        tmp.Add(ObjBase[i, j]);
+                        tmp2.Add(new Vector2(tX, tY));
+                        ObjBase[i, j].MoveObject(generator.GetTile(tX, tY).transform.position, animRuntime, true);
+                        ObjBase[i, j] = null;
+                        break;
+                    }
                 }
             }
         }
+        
+        SoundManager.Instance.Play("MovingTree");
 
         for (int i = 0; i < tmp.Count; i++)
             tmp[i].ChangePositionInGrid(tmp2[i]);
@@ -107,14 +115,14 @@ public class LevelManager : Singleton<LevelManager>
             .All(objective => !dangerTilePos.Any(i => i.Equals(objective)));
     }
 
-    IEnumerator ChangeStateToAnimOnPlay()
+    private IEnumerator ChangeStateToAnimOnPlay()
     {
         gameState = GameState.AnimOnPlay;
         yield return new WaitForSeconds(animRuntime);
         gameState = GameState.Play;
     }
 
-    IEnumerator ChangeStateToEndgame()
+    private IEnumerator ChangeStateToEndgame()
     {
         gameState = GameState.NotOnPlay;
         yield return new WaitForSeconds(animRuntime + 1f);
@@ -123,9 +131,6 @@ public class LevelManager : Singleton<LevelManager>
 
     private void LevelSuccess()
     {
-        generator.ClearLevel();
-        var p = PlayerPrefs.GetInt("CurrentLevel");
-        PlayerPrefs.SetInt("CurrentLevel", p + 1);
         UIManager.Instance._gameplayUI.Hide();
         UIManager.Instance.EndGameUI.Show();
     }
@@ -134,7 +139,6 @@ public class LevelManager : Singleton<LevelManager>
     {
         generator.ClearLevel();
         generator.GenerateLevel(currentLevel + 1);
-        currentLevel++;
         gameState = GameState.Play;
         UIManager.Instance._gameplayUI.Show();
         UIManager.Instance.EndGameUI.Hide();
