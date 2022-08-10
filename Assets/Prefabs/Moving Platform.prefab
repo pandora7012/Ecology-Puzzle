@@ -25,10 +25,10 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4362663937975606986}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.01, y: 0.03, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 0.9979082}
-  m_ConstrainProportionsScale: 1
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5033572625780829838}
   m_RootOrder: 1
@@ -154,14 +154,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spriteRenderer: {fileID: 0}
+  firm: 0
   rotationAngle: 0
   isLeftDirection: 0
   isRightDirection: 0
   boxCollider2D: {fileID: 2744280196346370318}
   infoSpriteRenderer: {fileID: 2114212494510887226}
   movingSprite: {fileID: 4004129724445297139}
-  _90right: {fileID: 21300000, guid: ce2003a22c06df546b3e5f27c9e7f2be, type: 3}
-  _90left: {fileID: 21300000, guid: a00c89625b4c2dc48824157fbc6f7687, type: 3}
+  _90right: {fileID: 21300000, guid: a00c89625b4c2dc48824157fbc6f7687, type: 3}
+  _90left: {fileID: 21300000, guid: c6aa89480d32b464ba694f9f15999d75, type: 3}
   _180: {fileID: 21300000, guid: 91420b5ae3843cc4e9ab507edf57bc86, type: 3}
 --- !u!210 &1202283793512432092
 SortingGroup:
@@ -272,7 +273,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -84412893
   m_SortingLayer: 2
-  m_SortingOrder: 15
+  m_SortingOrder: 16
   m_Sprite: {fileID: 21300000, guid: a00c89625b4c2dc48824157fbc6f7687, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

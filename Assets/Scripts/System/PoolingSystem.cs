@@ -9,7 +9,7 @@ public class PoolingSystem : Singleton<PoolingSystem>
     [Header("Objects")] [SerializeField] private Tile tile;
     [SerializeField] private MovingPlatform movingPlatformPrefabs;
     [SerializeField] private Objective objectivePrefabs;
-    [SerializeField] private Barrier barrierPrefabs; 
+    [SerializeField] private Firm firmPrefabs; 
 
     [Space(2)] [Header("Pool")] [SerializeField]
     private int poolSize = 150;
@@ -18,7 +18,7 @@ public class PoolingSystem : Singleton<PoolingSystem>
     public List<Tile> tilePool = new List<Tile>();
     public List<MovingPlatform> movingPlatformPool = new List<MovingPlatform>();
     public List<Objective> objectivesPool = new List<Objective>();
-    public List<Barrier> barrierPool = new List<Barrier>();
+    public List<Firm> barrierPool = new List<Firm>();
 
     public DataContainer SpriteContainer;
     
@@ -53,7 +53,7 @@ public class PoolingSystem : Singleton<PoolingSystem>
 
         for (int i = 0; i < objectPoolSize; i++)
         {
-            var obj = Instantiate(barrierPrefabs, transform); 
+            var obj = Instantiate(firmPrefabs, transform); 
             obj.gameObject.SetActive(false);
             barrierPool.Add(obj);
         }
@@ -74,7 +74,9 @@ public class PoolingSystem : Singleton<PoolingSystem>
 
     public MovingPlatform GetMovingPlatform()
     {
-        return movingPlatformPool.FirstOrDefault(v => !v.gameObject.activeInHierarchy);
+        var obj = movingPlatformPool.FirstOrDefault(v => !v.gameObject.activeInHierarchy);
+        obj.transform.rotation = Quaternion.identity;
+        return obj;
     }
 
     public Objective GetObjective()
@@ -82,12 +84,9 @@ public class PoolingSystem : Singleton<PoolingSystem>
         return objectivesPool.FirstOrDefault(oj => !oj.gameObject.activeSelf);
     }
 
-    public Barrier GetBarrier()
+    public Firm GetFirm()
     {
         return barrierPool.FirstOrDefault(oj => !oj.gameObject.activeSelf);
     }
-    
-
-
 
 }

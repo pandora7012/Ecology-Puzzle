@@ -9,6 +9,7 @@ public class Objective : ObjectBase
     public override void Init(Vector2 position, Transform parent, Vector2 positionInGrid)
     {
         base.Init(position, parent, positionInGrid);
+        firm = false;
         int u = Random.Range(0, _treeObjects.Length);
         for(int i = 0; i < _treeObjects.Length; i++)
         {

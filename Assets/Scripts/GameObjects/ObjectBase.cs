@@ -9,7 +9,7 @@ public class ObjectBase : MonoBehaviour
 {
     [SerializeField] protected SpriteRenderer spriteRenderer;
     [ShowInInspector] public Vector2 PositionInGrid { get; set; }
-
+    public bool firm;
 
     private void Awake()
     {
@@ -35,6 +35,7 @@ public class ObjectBase : MonoBehaviour
     {
     }
 
+    [Obsolete("MoveObject is awful, please use RotateMove instead")]
     public virtual void MoveObject(Vector3 targetPosition, float time, bool needPath)
     {
         if (!needPath)
@@ -53,11 +54,25 @@ public class ObjectBase : MonoBehaviour
         transform.DOLocalPath(waypoint, time + time*0.25f, PathType.CatmullRom, PathMode.Sidescroller2D, 3, Color.cyan);
     }
 
-    public virtual void ChangePositionInGrid(Vector2 cp)
+    public virtual void RotateMove(Vector2 center, float time, float angle)
     {
-      //  Debug.Log(PositionInGrid + "->" + cp);
-        PositionInGrid = cp;
-        LevelManager.Instance.AddObjectToMap(this, (int)cp.x, (int)cp.y);
+        Vector2 currVector  = (Vector2) transform.position - center;
+        float radius        = MathF.Sqrt(currVector.x * currVector.x + currVector.y * currVector.y);
+        float currAngle     = MathF.Atan2(currVector.y, currVector.x);
+        float targetAngle   = currAngle + angle * Mathf.Deg2Rad;
+
+        DOTween.To(() => currAngle, x => currAngle = x, targetAngle, time).OnUpdate(() =>
+          {
+              currVector = new Vector2(radius * MathF.Cos(currAngle), radius * MathF.Sin(currAngle));
+              transform.position = center + currVector;
+          });
+
+    }
+
+    public virtual void ChangePositionInGrid(Vector2 gridPosition)
+    {
+        PositionInGrid = gridPosition;
+        LevelManager.Instance.AddObjectToMap(this, (int)gridPosition.x, (int)gridPosition.y);
     }
 
     protected virtual void DisableObject()

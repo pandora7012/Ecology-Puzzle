@@ -15,7 +15,6 @@ public class InputManager : MonoBehaviour
         switch (state)
         {
             case LevelManager.GameState.Play:
-                Debug.Log("Input");
                 ConfirmPlatform();
                 break;
             default:
@@ -28,9 +27,10 @@ public class InputManager : MonoBehaviour
         var dir = Input.GetTouch(0).position;
         var origin = LevelManager.Instance.mainCam.ScreenPointToRay(dir);
         var hit = Physics2D.GetRayIntersection(origin);
+        if (hit == false) return;
+        if (hit.collider is null) return;
         var platform = hit.collider.TryGetComponent(out MovingPlatform mp);
         if (platform is false) return;
-//        Debug.Log("rotate");
         mp?.RotateExecute();
     }
     

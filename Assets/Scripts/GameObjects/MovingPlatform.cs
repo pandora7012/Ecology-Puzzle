@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
+using DG.Tweening;
 
 public class MovingPlatform : ObjectBase
 {
@@ -50,13 +51,18 @@ public class MovingPlatform : ObjectBase
         {
             t.OnChooseOnMovingPlatform();
         }
-        LevelManager.Instance.MoveObject( this.PositionInGrid , Size , rotationAngle, isRightDirection );
-        LevelManager.Instance.undoSystem.Record(this);
+        if (LevelManager.Instance.IsMovable(PositionInGrid, Size, rotationAngle, isRightDirection))
+        {
+            transform.DORotate(transform.eulerAngles + new Vector3(0, 0, rotationAngle * (isLeftDirection ? 1 : -1)), 0.75f);
+            LevelManager.Instance.MoveObject(PositionInGrid, transform.position, Size, rotationAngle, isRightDirection);
+            LevelManager.Instance.undoSystem.Record(this);
+        }
     }
     
     public void UndoRotateExecute()
     {
-        LevelManager.Instance.MoveObject( this.PositionInGrid , Size , rotationAngle, isLeftDirection );
+        transform.DORotate(transform.eulerAngles - new Vector3(0, 0, rotationAngle * (isLeftDirection ? 1 : -1)), 0.75f);
+        LevelManager.Instance.MoveObject(PositionInGrid, transform.position, Size , rotationAngle, isLeftDirection );
     }
 
 

@@ -27,6 +27,7 @@ public class LevelManager : Singleton<LevelManager>
     public GameState gameState;
     public float animRuntime;
     public int currentLevel;
+    public int numberOfLevel;
 
     public void AddObjectToMap(ObjectBase obj, int x, int y)
     {
@@ -36,68 +37,142 @@ public class LevelManager : Singleton<LevelManager>
             objectives.Add(op);
     }
 
-
-    public void MoveObject(Vector2 mainPos, int size, int angle, bool isRightDirection)
+    public bool IsMovable(Vector2 mainPos, int size, int angle, bool isRightDirection)
     {
-        
-        
-        
         var x = (int)mainPos.x;
         var y = (int)mainPos.y;
         int haft = size / 2;
-        var tmp = new List<ObjectBase>();
-        var tmp2 = new List<Vector2>();
         int offsetX = x - haft;
-        int offsetY = y - haft; // 시작 위치
-        
+        int offsetY = y - haft;
+
+        // Checking all object in the movepad
         for (int i = x - haft; i <= x + haft; i++)
         {
             for (int j = y - haft; j <= y + haft; j++)
             {
                 if (ObjBase[i, j] is null || (i == x && j == y))
                     continue;
+
+                if (ObjBase[i, j].firm)
+                    continue;
+
+                // Calculate relative grid position
                 int ip = i - offsetX;
                 int jp = j - offsetY;
+
+                // Rotate case
                 switch (isRightDirection)
                 {
+                    // Clockwise 90
                     case true when angle == 90:
-                    {
-                        int tX = jp + offsetX;
-                        int tY = size - ip + offsetY - 1;
-                        tmp.Add(ObjBase[i, j]);
-                        tmp2.Add(new Vector2(tX, tY));
-                        ObjBase[i, j].MoveObject(generator.GetTile(tX, tY).transform.position, animRuntime, false);
-                        ObjBase[i, j] = null;
-                        break;
-                    }
+                        {
+                            int tX = jp + offsetX;
+                            int tY = size - ip + offsetY - 1;
+                            if (ObjBase[tX, tY] is not null)
+                                if (ObjBase[tX, tY].firm)
+                                    return false;
+                            break;
+                        }
+                    // Counter-Clockwise 90
                     case false when angle == 90:
-                    {
-                        int tX = size - jp + offsetX - 1;
-                        int tY = ip + offsetY;
-                        tmp.Add(ObjBase[i, j]);
-                        tmp2.Add(new Vector2(tX, tY));
-                        ObjBase[i, j].MoveObject(generator.GetTile(tX, tY).transform.position, animRuntime, false);
-                        ObjBase[i, j] = null;
-                        break;
-                    }
+                        {
+                            int tX = size - jp + offsetX - 1;
+                            int tY = ip + offsetY;
+                            if (ObjBase[tX, tY] is not null)
+                                if (ObjBase[tX, tY].firm)
+                                    return false;
+                            break;
+                        }
+                    // 180
                     default:
-                    {
-                        int tX = size - ip + offsetX - 1;
-                        int tY = size - jp + offsetY - 1;
-                        tmp.Add(ObjBase[i, j]);
-                        tmp2.Add(new Vector2(tX, tY));
-                        ObjBase[i, j].MoveObject(generator.GetTile(tX, tY).transform.position, animRuntime, true);
-                        ObjBase[i, j] = null;
-                        break;
-                    }
+                        {
+                            int tX = size - ip + offsetX - 1;
+                            int tY = size - jp + offsetY - 1;
+                            if (ObjBase[tX, tY] is not null)
+                                if (ObjBase[tX, tY].firm)
+                                    return false;
+                            break;
+                        }
+                }
+            }
+        }
+
+        return true;
+    }
+
+
+    public void MoveObject(Vector2 mainPos, Vector2 center, int size, int angle, bool isRightDirection)
+    {
+
+        var x = (int)mainPos.x;
+        var y = (int)mainPos.y;
+        int haft = size / 2;
+        var movingObject = new List<ObjectBase>();
+        var futurePosition = new List<Vector2>();
+        int offsetX = x - haft;
+        int offsetY = y - haft;
+        
+        // Moving all object in the movepad
+        for (int i = x - haft; i <= x + haft; i++)
+        {
+            for (int j = y - haft; j <= y + haft; j++)
+            {
+                var obj = ObjBase[i, j];
+                if (obj is null || (i == x && j == y))
+                    continue;
+
+                if (obj.firm)
+                    continue;
+
+                // Calculate relative grid position
+                int ip = i - offsetX;
+                int jp = j - offsetY;
+
+                // Rotate case
+                switch (isRightDirection)
+                {
+                    // Clockwise 90
+                    case true when angle == 90:
+                        {
+                            int tX = jp + offsetX;
+                            int tY = size - ip + offsetY - 1;
+                            movingObject.Add(obj);
+                            futurePosition.Add(new Vector2(tX, tY));
+                            obj.RotateMove(center, animRuntime, -90);
+                            ObjBase[i, j] = null;
+                            break;
+                        }
+                    // Counter-Clockwise 90
+                    case false when angle == 90:
+                        {
+                            int tX = size - jp + offsetX - 1;
+                            int tY = ip + offsetY;
+                            movingObject.Add(obj);
+                            futurePosition.Add(new Vector2(tX, tY));
+                            obj.RotateMove(center, animRuntime, 90);
+                            ObjBase[i, j] = null;
+                            break;
+                        }
+                    // 180
+                    default:
+                        {
+                            int tX = size - ip + offsetX - 1;
+                            int tY = size - jp + offsetY - 1;
+                            movingObject.Add(obj);
+                            futurePosition.Add(new Vector2(tX, tY));
+                            obj.RotateMove(center, animRuntime, -180);
+                            ObjBase[i, j] = null;
+                            break;
+                        }
                 }
             }
         }
         
         SoundManager.Instance.Play("MovingTree");
 
-        for (int i = 0; i < tmp.Count; i++)
-            tmp[i].ChangePositionInGrid(tmp2[i]);
+        // Set moving object into new position
+        for (int i = 0; i < movingObject.Count; i++)
+            movingObject[i].ChangePositionInGrid(futurePosition[i]);
 
         StartCoroutine(CheckLevelSuccess() ? ChangeStateToEndgame() : ChangeStateToAnimOnPlay());
     }

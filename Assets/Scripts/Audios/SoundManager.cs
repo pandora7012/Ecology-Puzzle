@@ -1,6 +1,6 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 
 public class SoundManager : Singleton<SoundManager>
@@ -82,44 +82,32 @@ public class SoundManager : Singleton<SoundManager>
         }
     }
 
-    public void MusicFadeOut(float FadeTime, float vol)
+    public void MusicFadeOut(float fadeTime, float vol)
     {
         if (musicMute)
             return;
-        StartCoroutine(FastFadeOut("Music", FadeTime, vol));
+        FadeToValue("Music", fadeTime, vol);
     }
     
-    public void MusicFadeIn(float FadeTime, float vol)
+    public void MusicFadeIn(float fadeTime, float vol)
     {
         if (musicMute)
             return;
-        StartCoroutine(FastFadeIn("Music", FadeTime, vol));
+        FadeToValue("Music", fadeTime, vol);
     }
 
-    private IEnumerator FastFadeOut(string name, float FadeTime, float vol)
+    private void FadeToValue(string name, float fadeTime, float vol)
     {
-        foreach (var sound in sounds)
+        Sound audio = new Sound();
+        foreach(var sound in sounds)
         {
-            if (sound.name != name) continue;
-            while (sound.audioSource.volume > vol)
+            if (sound.name == name)
             {
-                sound.audioSource.volume -= Time.deltaTime / FadeTime * vol;
-                yield return null;
+                audio = sound;
+                break;
             }
         }
-    }
-
-    private IEnumerator FastFadeIn(string name, float FadeTime, float vol)
-    {
-        foreach (var sound in sounds)
-        {
-            if (sound.name != name) continue;
-            while (sound.audioSource.volume < vol)
-            {
-                sound.audioSource.volume += Time.deltaTime / FadeTime * vol;
-                yield return null;
-            }
-        }
+        DOTween.To(() => audio.audioSource.volume, x => audio.audioSource.volume = x, vol, fadeTime);
     }
 }
 

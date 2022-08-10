@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿
 using System.Collections.Generic;
 using System.Linq;
 using Sirenix.OdinInspector;
@@ -24,6 +23,7 @@ public class LevelGenerator : MonoBehaviour
     private Tile[,] _tileMatrix;
 
     private int _rowNum, _colNum;
+    private readonly Vector3 diff = new Vector3(0, 0.025f, 0);
 
     #region Get Level Info
 
@@ -55,17 +55,16 @@ public class LevelGenerator : MonoBehaviour
     [Button("Test GetLevel")]
     public void GenerateLevel( string[] info)
     {
-        SoundManager.Instance.MusicFadeOut(0.5f , 0.1f);
         //Generate map
         var tmp = new List<string>();
         tmp = info[0].Split().ToList();
-        _rowNum = int.Parse(tmp[1]);
-        _colNum = int.Parse(tmp[0]);
+        _rowNum = int.Parse(tmp[0]);
+        _colNum = int.Parse(tmp[1]);
         tmp.Clear();
         _tileMatrix = new Tile[_rowNum, _colNum];
         LevelManager.Instance.ObjBase = new ObjectBase[_rowNum, _colNum];
         GenerateMap();
-        LevelManager.Instance.cameraController.SetSizeAndPos(_rowNum+ 1.3f, _rowNum%2 == 0 ? new Vector3(-0.5f,0.1f, -10) : new Vector3(0,0.1f, -10));
+        LevelManager.Instance.cameraController.SetSizeAndPos(_colNum+ 1.3f, _colNum%2 == 0 ? new Vector3(-0.5f,0.1f, -10) : new Vector3(0,0.1f, -10));
 
         // get Objective Info
         tmp = info[1].Split().ToList();
@@ -73,13 +72,13 @@ public class LevelGenerator : MonoBehaviour
 
         // get barrier
         tmp = info[2].Split().ToList();
-        GenerateBarrier(tmp);
+        GenerateFirm(tmp);
 
         // get dangerAreaPos; 
         tmp = info[3].Split().ToList();
         GenerateDangerArea(tmp);
 
-        // get movingPlatform
+        // get MovePad
 
         tmp = info[4].Split().ToList();
         GenerateMovingPlatform1(tmp);
@@ -106,7 +105,7 @@ public class LevelGenerator : MonoBehaviour
                 _tileMatrix[i, j] = obj;
                 
                 obj.gameObject.SetActive(true);
-                obj.transform.localPosition = new Vector3(i - _rowNum / 2, j - _colNum / 2, 0);
+                obj.transform.localPosition = new Vector3(j - _colNum / 2, -1f + 1f*_rowNum / 2 - i, 0);
                 obj.SetIsBackgroundColor((i + j) % 2 == 0 ? 1 : 2);
             }
         }
@@ -121,12 +120,12 @@ public class LevelGenerator : MonoBehaviour
             var i1 = int.Parse(i[0]);
             var i2 = int.Parse(i[1]);
             var obj = PoolingSystem.Instance.GetObjective();
-            obj.Init(_tileMatrix[i2, i1].transform.position, mainGround.transform, new Vector2(i2,i1));
+            obj.Init(_tileMatrix[i1, i2].transform.position, mainGround.transform, new Vector2(i1,i2));
 
         }
     }
 
-    private void GenerateBarrier(List<string> tmp)
+    private void GenerateFirm(List<string> tmp)
     {
         tmp.RemoveAt(tmp.Count - 1);
         if ( tmp.Count  > 0 && tmp[0] != "#")
@@ -137,8 +136,8 @@ public class LevelGenerator : MonoBehaviour
                 var i = p.Split('-');
                 var i1 = int.Parse(i[0]);
                 var i2 = int.Parse(i[1]);
-                var obj = PoolingSystem.Instance.GetBarrier();
-                obj.Init(_tileMatrix[i2, i1].transform.position, mainGround.transform, new Vector2(i2,i1));
+                var obj = PoolingSystem.Instance.GetFirm();
+                obj.Init(_tileMatrix[i1, i2].transform.position, mainGround.transform, new Vector2(i1,i2));
             }
         }
     }
@@ -151,9 +150,9 @@ public class LevelGenerator : MonoBehaviour
             var i = p.Split('-');
             var i1 = int.Parse(i[0]);
             var i2 = int.Parse(i[1]);
-            var pos = new Vector2(i2, i1);
+            var pos = new Vector2(i1, i2);
             LevelManager.Instance.dangerTilePos.Add(pos);
-            _tileMatrix[i2, i1].SetToDangerArea();
+            _tileMatrix[i1, i2].SetToDangerArea();
         }
     }
     
@@ -169,7 +168,7 @@ public class LevelGenerator : MonoBehaviour
                 var i2 = int.Parse(i[1]);
                 var i3 = int.Parse(i[2]);
                 var obj = PoolingSystem.Instance.GetMovingPlatform();
-                obj.Init(_tileMatrix[i2, i1].transform.position, mainGround.transform, new Vector2(i2,i1));
+                obj.Init(_tileMatrix[i1, i2].transform.position + diff, mainGround.transform, new Vector2(i1,i2));
                 obj.Init(i3, 90, false);
             }
         }
@@ -187,7 +186,7 @@ public class LevelGenerator : MonoBehaviour
                 var i2 = int.Parse(i[1]);
                 var i3 = int.Parse(i[2]);
                 var obj = PoolingSystem.Instance.GetMovingPlatform();
-                obj.Init(_tileMatrix[i2, i1].transform.position, mainGround.transform, new Vector2(i2,i1));
+                obj.Init(_tileMatrix[i1, i2].transform.position + diff, mainGround.transform, new Vector2(i1,i2));
                 obj.Init(i3,  90, true);
             }
         }
@@ -206,7 +205,7 @@ public class LevelGenerator : MonoBehaviour
                 var i2 = int.Parse(i[1]);
                 var i3 = int.Parse(i[2]);
                 var obj = PoolingSystem.Instance.GetMovingPlatform();
-                obj.Init(_tileMatrix[i2, i1].transform.position, mainGround.transform, new Vector2(i2,i1));
+                obj.Init(_tileMatrix[i1, i2].transform.position + diff, mainGround.transform, new Vector2(i1,i2));
                 obj.Init(i3,  180, false);
             }
         }
