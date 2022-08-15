@@ -92,13 +92,13 @@ public class LevelGenerator : MonoBehaviour
         // get MovePad
 
         tmp = info[4].Split().ToList();
-        GenerateMovingPlatform1(tmp);
+        GenerateMovingPlatform1(tmp, the);
 
         tmp = info[5].Split().ToList();
-        GenerateMovingPlatform2(tmp);
+        GenerateMovingPlatform2(tmp, the);
 
         tmp = info[6].Split().ToList();
-        GenerateMovingPlatform3(tmp);
+        GenerateMovingPlatform3(tmp, the);
     }
 
     #endregion
@@ -166,7 +166,7 @@ public class LevelGenerator : MonoBehaviour
         }
     }
 
-    private void GenerateMovingPlatform1(List<string> tmp)
+    private void GenerateMovingPlatform1(List<string> tmp, int theme)
     {
         tmp.RemoveAt(tmp.Count - 1);
         if (tmp.Count > 0 && tmp[0] != "#")
@@ -179,12 +179,12 @@ public class LevelGenerator : MonoBehaviour
                 var i3 = int.Parse(i[2]);
                 var obj = PoolingSystem.Instance.GetMovingPlatform();
                 obj.Init(_tileMatrix[i1, i2].transform.position + diff, mainGround.transform, new Vector2(i1, i2), 0);
-                obj.Init(i3, 90, false);
+                obj.Init(i3, 90, false, theme);
             }
         }
     }
 
-    private void GenerateMovingPlatform2(List<string> tmp)
+    private void GenerateMovingPlatform2(List<string> tmp,int theme)
     {
         tmp.RemoveAt(tmp.Count - 1);
         if (tmp.Count > 0 && tmp[0] != "#")
@@ -197,12 +197,12 @@ public class LevelGenerator : MonoBehaviour
                 var i3 = int.Parse(i[2]);
                 var obj = PoolingSystem.Instance.GetMovingPlatform();
                 obj.Init(_tileMatrix[i1, i2].transform.position + diff, mainGround.transform, new Vector2(i1, i2), 0);
-                obj.Init(i3, 90, true);
+                obj.Init(i3, 90, true, theme);
             }
         }
     }
 
-    private void GenerateMovingPlatform3(List<string> tmp)
+    private void GenerateMovingPlatform3(List<string> tmp,int theme)
     {
         tmp.RemoveAt(tmp.Count - 1);
         if (tmp.Count > 0 && tmp[0] != "#")
@@ -215,7 +215,7 @@ public class LevelGenerator : MonoBehaviour
                 var i3 = int.Parse(i[2]);
                 var obj = PoolingSystem.Instance.GetMovingPlatform();
                 obj.Init(_tileMatrix[i1, i2].transform.position + diff, mainGround.transform, new Vector2(i1, i2), 0);
-                obj.Init(i3, 180, false);
+                obj.Init(i3, 180, false, theme);
             }
         }
     }

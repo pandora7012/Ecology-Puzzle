@@ -123,12 +123,15 @@ Library: lib_burst_generated
 --compilation-defines=PACKAGE_UITOOLKIT
 --compilation-defines=CSHARP_7_OR_LATER
 --compilation-defines=CSHARP_7_3_OR_NEWER
+--compilation-defines=ENABLE_VR_MODULE
+--compilation-defines=ENABLE_XR_MODULE
 --compilation-defines=ENABLE_ANIMATION_BURST
 --compilation-defines=TIMELINE_FRAMEACCURATE
 --compilation-defines=ENABLE_SPRITESHAPE_BURST
 --generate-link-xml=Temp\burst.link.xml
 --output=D:\Workspace\Ecology Puzzle\Temp\StagingArea\tempburstlibs\armeabi-v7a\lib_burst_generated
 --root-assembly=D:\Workspace\Ecology Puzzle\Temp\StagingArea\Data\Managed\UnityEngine.UI.dll
+--root-assembly=D:\Workspace\Ecology Puzzle\Temp\StagingArea\Data\Managed\Unity.RenderPipelines.Core.Runtime.dll
 --root-assembly=D:\Workspace\Ecology Puzzle\Temp\StagingArea\Data\Managed\Unity.Mathematics.dll
 --root-assembly=D:\Workspace\Ecology Puzzle\Temp\StagingArea\Data\Managed\Unity.Services.Core.Telemetry.dll
 --root-assembly=D:\Workspace\Ecology Puzzle\Temp\StagingArea\Data\Managed\Assembly-CSharp.dll
@@ -153,8 +156,10 @@ Library: lib_burst_generated
 --root-assembly=D:\Workspace\Ecology Puzzle\Temp\StagingArea\Data\Managed\Unity.Services.Core.Threading.dll
 --root-assembly=D:\Workspace\Ecology Puzzle\Temp\StagingArea\Data\Managed\Unity.Services.Core.Networking.dll
 --root-assembly=D:\Workspace\Ecology Puzzle\Temp\StagingArea\Data\Managed\Assembly-CSharp-firstpass.dll
+--root-assembly=D:\Workspace\Ecology Puzzle\Temp\StagingArea\Data\Managed\Unity.RenderPipelines.Core.ShaderLibrary.dll
 --root-assembly=D:\Workspace\Ecology Puzzle\Temp\StagingArea\Data\Managed\Unity.InternalAPIEngineBridge.001.dll
 --root-assembly=D:\Workspace\Ecology Puzzle\Temp\StagingArea\Data\Managed\Unity.Services.Core.Configuration.dll
+--root-assembly=D:\Workspace\Ecology Puzzle\Temp\StagingArea\Data\Managed\Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary.dll
 --assembly-folder=D:\Workspace\Ecology Puzzle\Temp\StagingArea\Data\Managed\
 --pdb-search-paths=Temp/ManagedSymbols/
 --method=UnityEngine.Animations.ProcessAnimationJobStruct`1[[UnityEngine.Animations.Rigging.MultiPositionConstraintJob, Unity.Animation.Rigging, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], UnityEngine.AnimationModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null::Execute(UnityEngine.Animations.Rigging.MultiPositionConstraintJob&, Unity.Animation.Rigging, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null|System.IntPtr, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|System.IntPtr, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|Unity.Jobs.LowLevel.Unsafe.JobRanges&, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null|System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089)--b5cdf7e8f004ac62ab5cf712781c2d56

@@ -20,10 +20,12 @@ public class MovingPlatform : ObjectBase
     private Sprite _90right;
     [SerializeField] private Sprite _90left;
     [SerializeField] private Sprite _180;
-    
+
+    [SerializeField] private Color theme1;
+    [SerializeField] private Color theme2;
     private int Size { get; set; }
     
-    public void Init(int width, int angle, bool isLeft )
+    public void Init(int width, int angle, bool isLeft , int theme)
     {
         rotationAngle = angle;
         isLeftDirection = isLeft;
@@ -41,6 +43,8 @@ public class MovingPlatform : ObjectBase
         Size = width;
         movingSprite.size = new Vector2(width, width);
         boxCollider2D.size = new Vector2(width, width);
+
+        movingSprite.color = theme == 1 ? theme1 : theme2; // 색상 변경
 
     }
     

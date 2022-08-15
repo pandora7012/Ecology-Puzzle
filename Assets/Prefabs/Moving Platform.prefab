@@ -164,6 +164,8 @@ MonoBehaviour:
   _90right: {fileID: 21300000, guid: a00c89625b4c2dc48824157fbc6f7687, type: 3}
   _90left: {fileID: 21300000, guid: c6aa89480d32b464ba694f9f15999d75, type: 3}
   _180: {fileID: 21300000, guid: 91420b5ae3843cc4e9ab507edf57bc86, type: 3}
+  theme1: {r: 0.37254903, g: 0.613501, b: 0.6901961, a: 0}
+  theme2: {r: 0.6901961, g: 0.37254903, b: 0.41960785, a: 1}
 --- !u!210 &1202283793512432092
 SortingGroup:
   m_ObjectHideFlags: 0
