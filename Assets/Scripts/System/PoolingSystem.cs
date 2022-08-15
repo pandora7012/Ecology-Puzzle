@@ -21,8 +21,8 @@ public class PoolingSystem : Singleton<PoolingSystem>
     public List<Firm> barrierPool = new List<Firm>();
 
     public DataContainer SpriteContainer;
-    
-    public override void InitAwake()
+
+    protected override void InitAwake()
     {
         base.InitAwake();
         InitPool();

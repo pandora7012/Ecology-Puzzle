@@ -22,7 +22,7 @@ public class ObjectBase : MonoBehaviour
     }
 
 
-    public virtual void Init(Vector2 position, Transform parent, Vector2 positionInGrid)
+    public virtual void Init(Vector2 position, Transform parent, Vector2 positionInGrid, int theme)
     {
         gameObject.SetActive(true);
         transform.SetParent(parent);
@@ -83,4 +83,6 @@ public class ObjectBase : MonoBehaviour
         gameObject.SetActive(false);
         PositionInGrid = new Vector2(-1, -1);
     }
+    
+    protected virtual void SetTheme(int theme){}
 }

@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class Firm : ObjectBase
 {
-    public override void Init(Vector2 position, Transform parent, Vector2 positionInGrid)
+    public override void Init(Vector2 position, Transform parent, Vector2 positionInGrid, int theme)
     {
-        base.Init(position, parent, positionInGrid);
+        base.Init(position, parent, positionInGrid, theme);
         firm = true;
     }
 }

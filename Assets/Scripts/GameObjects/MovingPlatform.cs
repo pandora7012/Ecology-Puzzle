@@ -47,10 +47,6 @@ public class MovingPlatform : ObjectBase
 
     public void RotateExecute()
     {
-        foreach (var t in _tileList)
-        {
-            t.OnChooseOnMovingPlatform();
-        }
         if (LevelManager.Instance.IsMovable(PositionInGrid, Size, rotationAngle, isRightDirection))
         {
             transform.DORotate(transform.eulerAngles + new Vector3(0, 0, rotationAngle * (isLeftDirection ? 1 : -1)), 0.75f);

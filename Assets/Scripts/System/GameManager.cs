@@ -1,21 +1,28 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 public class GameManager : Singleton<GameManager>
 {
     public PoolingSystem pooling; // 오브젝트 풀링 시스템
     public string version; //version of the game
-    
-    
-    public override void InitAwake()
+
+
+    protected override void InitAwake()
     {
         Application.targetFrameRate = 60;
         QualitySettings.vSyncCount = 0;
         Debug.LogWarning("GameManager Start");
         version = Application.version;
         SetDefaultPlayerPref();
+    }
+
+    [Button("Bypass level")]
+    public void BypassLevel(int level)
+    {
+        PlayerPrefs.SetInt(StringHash.CURRENT_LEVEL, level);
     }
 
     private void SetDefaultPlayerPref()

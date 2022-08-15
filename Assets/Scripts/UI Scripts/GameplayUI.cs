@@ -33,5 +33,10 @@ public class GameplayUI : UIBase
         SoundManager.Instance.Play("ButtonTap");
 
     }
+
+    public void TutorialButton()
+    {
+        UIManager.Instance.tutorial.Show();
+    }
   
 }

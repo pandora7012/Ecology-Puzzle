@@ -12,12 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa86c11774edcd149aebc61712c9f1fd, type: 3}
   m_Name: Sprite Data
   m_EditorClassIdentifier: 
-  normalSprite1:
-  - {fileID: 21300000, guid: 9b6feb5c4c6d85046901f22d1de0bb12, type: 3}
-  normalSprite2:
-  - {fileID: 21300000, guid: c255ba0c7efeec449a875d47a038a3a4, type: 3}
   DangerSprite: {fileID: 21300000, guid: f83fdeeb395ebfb4684ba904178ff676, type: 3}
   movingSprite1: {fileID: 21300000, guid: 9b6feb5c4c6d85046901f22d1de0bb12, type: 3}
   movingSprite2: {fileID: 21300000, guid: c255ba0c7efeec449a875d47a038a3a4, type: 3}
+  bg1: {fileID: 21300000, guid: 76cd3549db1f443469bc14e2a6067a4e, type: 3}
   levelButtonOn: {fileID: 21300000, guid: c3389ff5a5efa9e4d8cd3b8f1eb57928, type: 3}
   levelButtonPassed: {fileID: 21300000, guid: 09e4537d165c8324c9fde144da683ce7, type: 3}
+  dangerSprite2: {fileID: -1664225854, guid: fd3c09e36f3ff6a45afbf31deecd520f, type: 3}
+  movingSprite3: {fileID: 21300000, guid: 57397b44d50e16449b05f846a04b275e, type: 3}
+  movingSprite4: {fileID: 21300000, guid: 8ca7db1feccf9ff43b9fd67aa93d58c7, type: 3}
+  bg2: {fileID: 21300000, guid: 6f7cb7b4c03a5dd47b100006db50c56e, type: 3}

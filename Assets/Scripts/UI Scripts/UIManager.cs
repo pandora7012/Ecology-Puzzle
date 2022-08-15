@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UIManager : Singleton<UIManager>
 {
@@ -11,4 +12,8 @@ public class UIManager : Singleton<UIManager>
     [SerializeField] public Popup Popup;
     [SerializeField] public ChooseLevelUI ChooseLevelUI;
     [SerializeField] public SettingUI settingUIMain;
+    [SerializeField] public Tutorial tutorial;
+
+
+    [SerializeField] public Image background; 
 }

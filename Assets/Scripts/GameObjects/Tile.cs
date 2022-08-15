@@ -8,14 +8,11 @@ using Random = UnityEngine.Random;
 public class Tile : ObjectBase
 {
     [SerializeField] private SpriteRenderer sprite;
-    [SerializeField] private SpriteRenderer movingObjSprite;
-    [SerializeField] private Color dangerColor;
-
+    [SerializeField] private SpriteRenderer sprite2;
 
     protected override void DisableObject()
     {
         base.DisableObject();
-        sprite.material.color = Color.white;
         sprite.material.color = Color.white;
     }
 
@@ -24,35 +21,44 @@ public class Tile : ObjectBase
         gameObject.SetActive(true);
         transform.SetParent(parent);
         transform.localPosition = position;
+        
     }
 
-    public void SetIsBackgroundColor(int color)
+    public void SetIsBackgroundColor(int color, int theme)
     {
+        sprite2.gameObject.SetActive(false);
         sprite.gameObject.SetActive(true);
-        var len = PoolingSystem.Instance.SpriteContainer.normalSprite1.Length;
-        sprite.sprite = color == 1
-            ? PoolingSystem.Instance.SpriteContainer.movingSprite1
-            : PoolingSystem.Instance.SpriteContainer.movingSprite2;
-        movingObjSprite.gameObject.SetActive(false);
+        sprite.sprite = theme switch
+        {
+            1 => color == 1
+                ? PoolingSystem.Instance.SpriteContainer.movingSprite1
+                : PoolingSystem.Instance.SpriteContainer.movingSprite2,
+            2 => color == 1
+                ? PoolingSystem.Instance.SpriteContainer.movingSprite3
+                : PoolingSystem.Instance.SpriteContainer.movingSprite4,
+            _ => sprite.sprite
+        };
+
         sprite.sortingOrder = (int)-transform.position.y;
     }
 
-    public void SetIsMovePlatformColor()
-    {
-        sprite.gameObject.SetActive(false);
-        movingObjSprite.gameObject.SetActive(true);
-    }
-    
 
-    public void SetToDangerArea()
+    public void SetToDangerArea(int theme)
     {
         sprite.gameObject.SetActive(true);
-        movingObjSprite.gameObject.SetActive(false);
-        sprite.sprite = PoolingSystem.Instance.SpriteContainer.DangerSprite; 
-    }
+        var container = PoolingSystem.Instance.SpriteContainer; 
+        switch (theme)
+        {
+            case 1:
+                sprite.sprite = container.DangerSprite;
+                sprite.gameObject.SetActive(true);
+                sprite2.gameObject.SetActive(false);
+                break;
+            case 2:
+                sprite.gameObject.SetActive(false);
+                sprite2.gameObject.SetActive(true);
+                break;
+        }
 
-    public void OnChooseOnMovingPlatform()
-    {
-        //sprite.material.DOColor( selectColor , LevelManager.Instance.animRuntime + 0.5f).From(idleColor).SetEase(Ease.OutCirc);
     }
 }

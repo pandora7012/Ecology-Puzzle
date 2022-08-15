@@ -19,7 +19,7 @@ public class Singleton<T> : MonoBehaviour where T : Singleton<T>
         }
     }
 
-    public virtual void InitAwake()
+    protected virtual void InitAwake()
     {
 
     }
