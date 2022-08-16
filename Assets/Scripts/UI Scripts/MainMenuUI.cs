@@ -38,7 +38,7 @@ public class MainMenuUI : UIBase
 
     public void InfoButton()
     {
-        UIManager.Instance.Popup.Show("INFO" , "Team 4's Game");
+        UIManager.Instance.info.Show();
     }
     
 }

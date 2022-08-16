@@ -14,7 +14,7 @@ public class GameManager : Singleton<GameManager>
     {
         Application.targetFrameRate = 60;
         QualitySettings.vSyncCount = 0;
-        Debug.LogWarning("GameManager Start");
+     //   Debug.LogWarning("GameManager Start");
         version = Application.version;
         SetDefaultPlayerPref();
     }

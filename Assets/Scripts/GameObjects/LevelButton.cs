@@ -16,6 +16,8 @@ public class LevelButton : MonoBehaviour
     [SerializeField] private Color color;
     [SerializeField] private Color color2; //color of the button when it is locked
 
+    [SerializeField] private ParticleSystem pa;
+
     private void OnEnable()
     {
         var ip = PlayerPrefs.GetInt(StringHash.CURRENT_LEVEL);
@@ -24,6 +26,7 @@ public class LevelButton : MonoBehaviour
         {
             sprite.sprite = PoolingSystem.Instance.SpriteContainer.levelButtonOn;
             levelText.color = color; 
+            
         }
         else if (ip > level)
         {
@@ -32,6 +35,7 @@ public class LevelButton : MonoBehaviour
         }
         else
             sprite.color = Color.gray;
+        pa.gameObject.SetActive(ip == level);
     }
 
 
@@ -46,7 +50,6 @@ public class LevelButton : MonoBehaviour
         if (ip < level)
             return;
         SoundManager.Instance.Play("ButtonTap");
-        Debug.Log("dadsd");
         UIManager.Instance.ChooseLevelUI.Hide();
         LevelManager.Instance.generator.GenerateLevel(level);
         UIManager.Instance._gameplayUI.Show();
