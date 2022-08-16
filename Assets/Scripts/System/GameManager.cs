@@ -14,7 +14,6 @@ public class GameManager : Singleton<GameManager>
     {
         Application.targetFrameRate = 60;
         QualitySettings.vSyncCount = 0;
-     //   Debug.LogWarning("GameManager Start");
         version = Application.version;
         SetDefaultPlayerPref();
     }
@@ -33,6 +32,8 @@ public class GameManager : Singleton<GameManager>
             PlayerPrefs.SetInt(StringHash.MUSIC, 1);
         if (!PlayerPrefs.HasKey(StringHash.SOUND_EFFECT))
             PlayerPrefs.SetInt(StringHash.SOUND_EFFECT, 1);
+        if (!PlayerPrefs.HasKey(StringHash.FIRST_OPEN))
+            PlayerPrefs.SetInt(StringHash.FIRST_OPEN, 0);
     }
 }
 
@@ -42,4 +43,5 @@ public static class StringHash
     public static string CURRENT_LEVEL = "CurrentLevel";
     public static string MUSIC = "Music";
     public static string SOUND_EFFECT = "Sfx";
+    public static string FIRST_OPEN = "FirstTime";
 }

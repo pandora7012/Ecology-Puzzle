@@ -13,7 +13,9 @@ public class UIManager : Singleton<UIManager>
     [SerializeField] public ChooseLevelUI ChooseLevelUI;
     [SerializeField] public SettingUI settingUIMain;
     [SerializeField] public Tutorial tutorial;
-    [SerializeField] public Popup info; 
+    [SerializeField] public Popup info;
+
+    [SerializeField] public BubbleTuT bubbleTuT;
 
     [SerializeField] public Image background; 
 }

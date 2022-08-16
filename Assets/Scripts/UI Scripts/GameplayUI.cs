@@ -7,7 +7,18 @@ using UnityEngine;
 public class GameplayUI : UIBase
 {
     [SerializeField] private TextMeshProUGUI levelText;
-    
+
+
+    public override void Show()
+    {
+        base.Show();
+        if (PlayerPrefs.GetInt(StringHash.FIRST_OPEN) == 0)
+        {
+            PlayerPrefs.SetInt(StringHash.FIRST_OPEN, 1);
+            TutorialButton();
+            PoolingSystem.Instance.handTut.gameObject.SetActive(true);
+        }
+    }
 
     public void UpdateUI()
     {

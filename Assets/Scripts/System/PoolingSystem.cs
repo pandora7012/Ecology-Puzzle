@@ -21,7 +21,10 @@ public class PoolingSystem : Singleton<PoolingSystem>
     public List<Firm> barrierPool = new List<Firm>();
 
     public DataContainer SpriteContainer;
-
+    public GameObject handTut;
+    
+    
+    
     protected override void InitAwake()
     {
         base.InitAwake();
@@ -61,15 +64,7 @@ public class PoolingSystem : Singleton<PoolingSystem>
 
     public Tile GetTile()
     {
-        foreach (var tile1 in tilePool)
-        {
-            if (!tile1.gameObject.activeSelf)
-            {
-                return tile1;
-            }
-        }
-
-        return null;
+        return tilePool.FirstOrDefault(tile1 => !tile1.gameObject.activeSelf);
     }
 
     public MovingPlatform GetMovingPlatform()

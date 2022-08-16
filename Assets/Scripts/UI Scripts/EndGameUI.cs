@@ -14,7 +14,7 @@ public class EndGameUI : UIBase
             PlayerPrefs.SetInt(StringHash.CURRENT_LEVEL, p + 1);
         SoundManager.Instance.Play("EndGame");
         SoundManager.Instance.Play("Particle");
-        SoundManager.Instance.MusicFadeOut(0.5f, 0.3f);
+        SoundManager.Instance.MusicFadeOut(0.5f, 0.1f);
     }
 
     public void HomeButton()
@@ -27,7 +27,7 @@ public class EndGameUI : UIBase
 
     public void NextLevelButton()
     {
-        SoundManager.Instance.MusicFadeIn(0.5f, 1f);
+        SoundManager.Instance.MusicFadeIn(0.5f, 0.4f);
         var p = PlayerPrefs.GetInt(StringHash.CURRENT_LEVEL);
         if (p > LevelManager.Instance.numberOfLevel)
         {

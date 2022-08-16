@@ -66,8 +66,20 @@ public class LevelGenerator : MonoBehaviour
         _tileMatrix = new Tile[_rowNum, _colNum];
         LevelManager.Instance.ObjBase = new ObjectBase[_rowNum, _colNum];
         var the = 0;
-        var ran = Random.Range(0, 10) < 5 ? the = 1 : the = 2;
 
+        var  level = LevelManager.Instance.currentLevel;
+
+        the = level switch
+        {
+            1 => 1,
+            2 => 1,
+            3 => 2, 
+            4 => 2,
+            _ => Random.Range(0, 10) < 5 ? the = 1 : the = 2
+        };
+
+        UIManager.Instance.bubbleTuT.gameObject.SetActive(level is 1 or 3);
+        
         UIManager.Instance.background.sprite = the == 1
             ? PoolingSystem.Instance.SpriteContainer.bg1
             : PoolingSystem.Instance.SpriteContainer.bg2;

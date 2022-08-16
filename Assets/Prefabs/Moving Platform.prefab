@@ -161,11 +161,11 @@ MonoBehaviour:
   boxCollider2D: {fileID: 2744280196346370318}
   infoSpriteRenderer: {fileID: 2114212494510887226}
   movingSprite: {fileID: 4004129724445297139}
-  _90right: {fileID: 21300000, guid: a00c89625b4c2dc48824157fbc6f7687, type: 3}
-  _90left: {fileID: 21300000, guid: c6aa89480d32b464ba694f9f15999d75, type: 3}
-  _180: {fileID: 21300000, guid: 91420b5ae3843cc4e9ab507edf57bc86, type: 3}
-  theme1: {r: 0.37254903, g: 0.613501, b: 0.6901961, a: 0}
-  theme2: {r: 0.81960785, g: 0.12156863, b: 0.8117647, a: 0.34901962}
+  _90right: {fileID: 21300000, guid: 4074a1f510396d24c9b90845ab9ab509, type: 3}
+  _90left: {fileID: 21300000, guid: 10c8807761e272742bc87f72b74cb167, type: 3}
+  _180: {fileID: 21300000, guid: edc39c25b5aa2b345a0ab3b9ad749ad8, type: 3}
+  theme1: {r: 0.13333334, g: 0.73333335, b: 0.73333335, a: 0}
+  theme2: {r: 0.81960785, g: 0.2784314, b: 0.81404686, a: 0.7372549}
 --- !u!210 &1202283793512432092
 SortingGroup:
   m_ObjectHideFlags: 0

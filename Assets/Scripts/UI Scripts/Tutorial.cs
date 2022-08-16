@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,10 +12,13 @@ public class Tutorial : Popup
     [SerializeField] private GameObject btRight;
 
     int currentTut = 2;
-    
-    
-    
-    
+
+    private void OnEnable()
+    {
+        LevelManager.Instance.gameState = LevelManager.GameState.NotOnPlay; //para que no se pueda jugar
+    }
+
+
     public override void Show()
     {
         base.Show();
