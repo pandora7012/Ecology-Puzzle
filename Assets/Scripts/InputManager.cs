@@ -15,7 +15,7 @@ public class InputManager : MonoBehaviour
             Input.touches[0].phase != TouchPhase.Began || state != LevelManager.GameState.Play
             /*|| EventSystem.current.IsPointerOverGameObject()*/) return;
         PoolingSystem.Instance.handTut.gameObject.SetActive(false);
-        UIManager.Instance.bubbleTuT.gameObject.SetActive(false);
+        UIManager.Instance.bubbleTuT.DisableBut();
         
 
         switch (state)

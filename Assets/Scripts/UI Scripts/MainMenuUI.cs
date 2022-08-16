@@ -7,7 +7,7 @@ public class MainMenuUI : UIBase
     public override void Show()
     {
         base.Show();
-        SoundManager.Instance.MusicFadeIn(0.5f, 1f);
+        SoundManager.Instance.MusicFadeIn(0.5f, 0.5f);
     }
 
     public void PlayButton()

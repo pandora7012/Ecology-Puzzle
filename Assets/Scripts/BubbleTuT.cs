@@ -23,7 +23,7 @@ public class BubbleTuT : MonoBehaviour
         };
     }
 
-    public void Disable()
+    public void DisableBut()
     {
         transform.DOScale(0, 0.25f).SetEase(Ease.InBack).OnComplete(() =>
         {

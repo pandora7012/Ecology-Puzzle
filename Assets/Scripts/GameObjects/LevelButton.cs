@@ -51,8 +51,9 @@ public class LevelButton : MonoBehaviour
             return;
         SoundManager.Instance.Play("ButtonTap");
         UIManager.Instance.ChooseLevelUI.Hide();
+        LevelManager.Instance.gameState = LevelManager.GameState.Play;
         LevelManager.Instance.generator.GenerateLevel(level);
         UIManager.Instance._gameplayUI.Show();
-        LevelManager.Instance.gameState = LevelManager.GameState.Play;
+        
     }
 }
